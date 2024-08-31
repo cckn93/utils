@@ -28,7 +28,7 @@ class Portfolio:
     def load(cls, date: date, path: str):
         # loading portoflio from a given path
         port = Portfolio()
-        df = pd.read_csv(path)
+        df = pd.read_csv("data/{}_holdings.csv".format(date))
         for _, row in df.iterrows():
             port.basket['ticker'] = Holding(
                 ticker = row['ticker'],
@@ -45,5 +45,8 @@ class Portfolio:
             holding_qty, cost = holding.qty, holding.cost
             cost = cost if qty<0 else (cost*holding_qty + price*qty) / (holding_qty+qty)
         self.basket[ticker] = Holding(ticker, holding_qty, cost)
+    
+    def cal_avg_cost(self):
+        raise NotImplementedError()
 
 
